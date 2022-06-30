@@ -1,0 +1,229 @@
+@import url(main.css);
+
+/* Layout */
+
+/* Main form body */
+
+.form-body {
+    padding: 0px var(--side-margin);
+    padding-top: var(--nav-bar-height);
+}
+
+main > form {
+    max-width: 280px;
+    margin: 2rem auto;
+    margin-bottom: 3rem;
+}
+
+/* Input groups */
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group > * {
+    display: block;
+}
+
+.input-group input, .input-group textarea {
+    padding: .25rem;
+    width: 100%;
+}
+
+.input-group.inline > * {
+    display: inline;
+}
+
+.input-group.inline input {
+    width: initial;
+}
+
+.input-group .error-msg {
+    padding-top: .5rem;
+}
+
+.input-group button {
+    margin: 0% auto;
+    padding: .5rem;
+}
+
+/* Blog form */
+
+main > .sec-form {
+    max-width: 360px;
+    margin: 2rem auto;
+    margin-bottom: 3rem;
+}
+
+/* Blog editor */
+
+main > form.resume-editor {
+    width: 80%;
+    max-width: none;
+    min-width: 320px;
+}
+
+.resume-editor .input-group input, .resume-editor .input-group textarea {
+    width: 90%;
+}
+
+.res-basics-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "city-field state-field"
+        "email-field email-field";
+}
+
+.res-basics-form .input-group:nth-child(1) {
+    grid-area: city-field;
+}
+
+.res-basics-form .input-group:nth-child(2) {
+    grid-area: state-field;
+}
+
+.res-basics-form .input-group:nth-child(3) {
+    grid-area: email-field;
+}
+
+.res-profiles-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "prof1-field prof2-field"
+        "prof3-field prof3-field";
+}
+
+.res-profiles-form .input-group:nth-child(1) {
+    grid-area: prof1-field;
+}
+
+.res-profiles-form .input-group:nth-child(2) {
+    grid-area: prof2-field;
+}
+
+.res-profiles-form .input-group:nth-child(3) {
+    grid-area: prof3-field;
+}
+
+.res-summary-form {
+    margin-bottom: 2rem;
+}
+
+.skillAndLangForm {
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "skill-field langs-field";
+}
+
+.skillAndLangForm .input-group:nth-child(1) {
+    grid-area: skill-field;
+}
+
+.skillAndLangForm .input-group:nth-child(2) {
+    grid-area: langs-field;
+}
+
+.resume-editor .input-group label button {
+    padding: 0% .25rem;
+    cursor: pointer;
+}
+
+.add-skill, .add-work {
+    height: 3rem;
+    width: 100%;
+}
+
+.add-skill button, .add-work button {
+    width: 75%;
+    margin: 0% auto;
+    display: block;
+}
+
+.work-form {
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "work-name-field work-name-field"
+        "work-position-field work-position-field"
+        "work-location-field work-location-field"
+        "work-stdt-field work-endt-field"
+        "work-high-field work-high-field";
+}
+
+.work-form .input-group:nth-child(1) {
+    grid-area: work-name-field;
+}
+
+.work-form .input-group:nth-child(2) {
+    grid-area: work-position-field;
+}
+
+.work-form .input-group:nth-child(3) {
+    grid-area: work-location-field;
+}
+
+.work-form .input-group:nth-child(4) {
+    grid-area: work-stdt-field;
+}
+
+.work-form .input-group:nth-child(5) {
+    grid-area: work-endt-field;
+}
+
+.work-form .input-group:nth-child(6) {
+    grid-area: work-high-field;
+}
+
+@media screen and (min-width: 560px) {
+    .res-basics-form {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "city-field state-field email-field";
+    }
+
+    .work-form {
+        grid-template-areas:
+            "work-name-field work-position-field"
+            "work-location-field work-location-field"
+            "work-stdt-field work-endt-field"
+            "work-high-field work-high-field";
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .res-summary-form, .work-form .input-group:nth-child(6) {
+        max-width: 640px;
+    }
+
+    .work-form {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "work-name-field work-position-field work-location-field"
+            "work-stdt-field work-endt-field ."
+            "work-high-field work-high-field work-high-field";
+    }
+
+    .skillAndLangForm {
+        max-width: 640px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .res-profiles-form {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "prof1-field prof2-field prof3-field"
+    }
+}
+
+@media screen and (min-width: 1280px) {
+}

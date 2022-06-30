@@ -1,0 +1,19 @@
+:root {
+    --icon-page-color: var(--common-black);
+}
+
+.icon {
+    display: inline-block;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+}
+
+/* .icon-pin {
+    -webkit-mask: url("media/user.svg");
+    mask: url("media/user.svg");
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--icon-page-color);
+    -webkit-mask-size: cover;
+    mask-size: cover;
+} */

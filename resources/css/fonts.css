@@ -1,0 +1,76 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+p, .contact-links {
+    line-height: 1.5;
+}
+
+.nav-content ul li > a:hover, .nav-content > ul > li button:hover {
+    text-decoration: underline;
+}
+
+.nav-content > ul > li button {
+    font: inherit;
+}
+
+.access-opts button {
+    font-size: 1.25rem;
+}
+
+.access-opts select {
+    font-family: inherit;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+section.skills li, section.languages li {
+    line-height: 1.5;
+}
+
+.author-role {
+    font-size: .875rem;
+    font-weight: lighter;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+summary.work-position {
+    line-height: 1.5;
+}
+
+summary.work-position:hover, details[open] summary.work-position {
+    text-decoration: underline;
+}
+
+.proj-link {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Forms */
+
+.input-group input, .input-group button, .input-group textarea {
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Blog items */
+
+.blog-desc .blog-category {
+    font-weight: bold;
+}
+
+/* Blog pagination */
+
+.blog-feed-pagination {
+    font-size: 1.25rem;
+}
+
+.blog-feed-footnote b {
+    font-size: 1.25rem;
+}
