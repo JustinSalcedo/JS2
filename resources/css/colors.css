@@ -15,6 +15,7 @@
     --bkg-proj-link: hsl(113, 48%, 54%);
     --bkg-proj-link-hvr: hsl(113, 48%, 49%);
     --bkg-page-link: hsl(208, 48%, 54%);
+    --bkg-tag: var(--paper-white);
 
     --main-footer: var(--paper-white);
 
@@ -23,6 +24,7 @@
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
     --gray-text: hsla(260, 2%, 60%);
+    --tag-text: var(--common-black);
 
     /* Borders */
     --light-border: 1px solid var(--light-gray);
@@ -59,6 +61,11 @@ body.dark-theme {
 body {
     background-color: var(--bkg-main-page);
     color: var(--body-text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .blackout.on {
@@ -117,6 +124,22 @@ body {
     color: inherit;
     text-decoration: none;
     font-style: italic;
+}
+
+.proj-type {
+    background-color: var(--bkg-tag);
+    color: var(--tag-text);
+}
+
+.proj-tags li {
+    background-color: var(--bkg-tag);
+    border-radius: 8px;
+    color: var(--tag-text);
+}
+
+.proj-desc-body.on {
+    background: var(--bkg-main-page);
+    border-radius: 20px;
 }
 
 .proj-link {

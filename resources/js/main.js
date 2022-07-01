@@ -12,14 +12,22 @@ const homeBtn = document.getElementById('go-hide')
 homeBtn.addEventListener("click", goHide)
 
 const blackout = document.querySelector('.blackout')
-blackout.addEventListener("click", toggleSideNavbar)
+let isModalOn = false
+let activeModal = null
+blackout.addEventListener("click", () => {
+    if (!isModalOn) {
+        toggleSideNavbar()
+    } else {
+        closeModal()
+    }
+})
 
 const sideNavbar = document.querySelector('nav.nav-content')
 
 // addEventListener("scroll", () => console.log('scrolling'))
 
 function goHide() {
-    scrollToTop()
+    // scrollToTop()
     toggleSideNavbar()
 }
 
@@ -45,8 +53,20 @@ function toggleSideNavbar() {
     }
 }
 
+function closeModal() {
+    if (blackout.className === "blackout on modal") {
+        activateScrolling()
+        blackout.classList.replace('on', 'off')
+        blackout.classList.remove('modal')
+        activeModal.classList.remove('on')
+        activeModal.parentNode.removeAttribute("open")
+        activeModal = null
+        isModalOn = false
+    }
+}
+
 function deactivateScrolling() {
-    if (window.innerWidth < 561) {
+    if (window.innerWidth < 561 || isModalOn) {
         document.body.style.height = "100%"
         document.body.style.overflow = "hidden"
     }
@@ -218,8 +238,10 @@ document.addEventListener('DOMContentLoaded', setupView)
 
 function setupView() {
     displayJobRoles()
+    addWorkTogglers()
+    addProjectModals()
     cropAllBlogSums()
-    moveLangSectionUp()
+    // moveLangSectionUp()
 }
 
 // Display job roles for each description
@@ -250,23 +272,71 @@ function displayJobRoles() {
     }
 
     if (jobRoles.length && jobRoles[0]) {
-        jobRoles.forEach(jobRole => jobRole.setAttribute("open", ""))
+        jobRoles.forEach(jobRole => {
+            jobRole.setAttribute("open", "")
+            jobRole.parentElement.style.listStyle = "disclosure-open"
+        })
+    }
+}
+
+function addWorkTogglers() {
+    const summaryList = Array.from(document.querySelectorAll(".work-desc li summary"))
+    if (summaryList && summaryList.length) {
+        summaryList.forEach(summary => summary.addEventListener("click", toggleDisclosures))
+    }
+}
+
+function toggleDisclosures(e) {
+    const listNode = e.target.parentNode.parentNode
+    const wasDetailsOpen = e.target.parentNode.hasAttribute("open")
+    if (wasDetailsOpen) {
+        // Now is closed
+        listNode.removeAttribute("style")
+    } else {
+        // Now is open
+        listNode.style.listStyle = "disclosure-open"
+    }
+}
+
+function addProjectModals() {
+    const summaryList = Array.from(document.querySelectorAll(".proj-desc summary"))
+    if (summaryList && summaryList.length) {
+        summaryList.forEach(summary => summary.addEventListener("click", displayProjModal))
+    }
+}
+
+function displayProjModal(e) {
+    const { display } = sideNavbar.style
+    if (window.innerWidth > 767 && (!display || display === "none")) {
+        const wasDetailsOpen = e.target.parentNode.hasAttribute("open")
+        if (!wasDetailsOpen) {
+            isModalOn = true
+            deactivateScrolling()
+            if (window.innerWidth < 1024) {
+                hideNavbar()
+            }
+            blackout.classList.replace("off", "on")
+            blackout.classList.add("modal")
+
+            activeModal = e.target.nextElementSibling
+            activeModal.classList.add("on")
+        }
     }
 }
 
 // While creating the project section
-function moveLangSectionUp() {
-    if (window.innerWidth > 1279) {
-        const skillSection = document.querySelector("section.skills")
-        const langSection = document.querySelector("section.languages")
+// function moveLangSectionUp() {
+//     if (window.innerWidth > 1279) {
+//         const skillSection = document.querySelector("section.skills")
+//         const langSection = document.querySelector("section.languages")
 
-        if (skillSection && langSection) {
-            const skillUl = skillSection.querySelector("ul")
-            const topValue = skillSection.clientHeight - skillUl.clientHeight - 64
-            langSection.setAttribute("style", `top: -${topValue}px;`)
-        }
-    }
-}
+//         if (skillSection && langSection) {
+//             const skillUl = skillSection.querySelector("ul")
+//             const topValue = skillSection.clientHeight - skillUl.clientHeight - 64
+//             langSection.setAttribute("style", `top: -${topValue}px;`)
+//         }
+//     }
+// }
 
 // Crop blog summary text
 

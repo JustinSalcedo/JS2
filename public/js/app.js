@@ -2119,11 +2119,19 @@ burgerBtn.addEventListener("click", toggleSideNavbar);
 var homeBtn = document.getElementById('go-hide');
 homeBtn.addEventListener("click", goHide);
 var blackout = document.querySelector('.blackout');
-blackout.addEventListener("click", toggleSideNavbar);
+var isModalOn = false;
+var activeModal = null;
+blackout.addEventListener("click", function () {
+  if (!isModalOn) {
+    toggleSideNavbar();
+  } else {
+    closeModal();
+  }
+});
 var sideNavbar = document.querySelector('nav.nav-content'); // addEventListener("scroll", () => console.log('scrolling'))
 
 function goHide() {
-  scrollToTop();
+  // scrollToTop()
   toggleSideNavbar();
 }
 
@@ -2149,8 +2157,20 @@ function toggleSideNavbar() {
   }
 }
 
+function closeModal() {
+  if (blackout.className === "blackout on modal") {
+    activateScrolling();
+    blackout.classList.replace('on', 'off');
+    blackout.classList.remove('modal');
+    activeModal.classList.remove('on');
+    activeModal.parentNode.removeAttribute("open");
+    activeModal = null;
+    isModalOn = false;
+  }
+}
+
 function deactivateScrolling() {
-  if (window.innerWidth < 561) {
+  if (window.innerWidth < 561 || isModalOn) {
     document.body.style.height = "100%";
     document.body.style.overflow = "hidden";
   }
@@ -2324,8 +2344,9 @@ document.addEventListener('DOMContentLoaded', setupView);
 
 function setupView() {
   displayJobRoles();
-  cropAllBlogSums();
-  moveLangSectionUp();
+  addWorkTogglers();
+  addProjectModals();
+  cropAllBlogSums(); // moveLangSectionUp()
 } // Display job roles for each description
 
 
@@ -2355,24 +2376,78 @@ function displayJobRoles() {
 
   if (jobRoles.length && jobRoles[0]) {
     jobRoles.forEach(function (jobRole) {
-      return jobRole.setAttribute("open", "");
+      jobRole.setAttribute("open", "");
+      jobRole.parentElement.style.listStyle = "disclosure-open";
     });
   }
-} // While creating the project section
+}
 
+function addWorkTogglers() {
+  var summaryList = Array.from(document.querySelectorAll(".work-desc li summary"));
 
-function moveLangSectionUp() {
-  if (window.innerWidth > 1279) {
-    var skillSection = document.querySelector("section.skills");
-    var langSection = document.querySelector("section.languages");
+  if (summaryList && summaryList.length) {
+    summaryList.forEach(function (summary) {
+      return summary.addEventListener("click", toggleDisclosures);
+    });
+  }
+}
 
-    if (skillSection && langSection) {
-      var skillUl = skillSection.querySelector("ul");
-      var topValue = skillSection.clientHeight - skillUl.clientHeight - 64;
-      langSection.setAttribute("style", "top: -".concat(topValue, "px;"));
+function toggleDisclosures(e) {
+  var listNode = e.target.parentNode.parentNode;
+  var wasDetailsOpen = e.target.parentNode.hasAttribute("open");
+
+  if (wasDetailsOpen) {
+    // Now is closed
+    listNode.removeAttribute("style");
+  } else {
+    // Now is open
+    listNode.style.listStyle = "disclosure-open";
+  }
+}
+
+function addProjectModals() {
+  var summaryList = Array.from(document.querySelectorAll(".proj-desc summary"));
+
+  if (summaryList && summaryList.length) {
+    summaryList.forEach(function (summary) {
+      return summary.addEventListener("click", displayProjModal);
+    });
+  }
+}
+
+function displayProjModal(e) {
+  var display = sideNavbar.style.display;
+
+  if (window.innerWidth > 767 && (!display || display === "none")) {
+    var wasDetailsOpen = e.target.parentNode.hasAttribute("open");
+
+    if (!wasDetailsOpen) {
+      isModalOn = true;
+      deactivateScrolling();
+
+      if (window.innerWidth < 1024) {
+        hideNavbar();
+      }
+
+      blackout.classList.replace("off", "on");
+      blackout.classList.add("modal");
+      activeModal = e.target.nextElementSibling;
+      activeModal.classList.add("on");
     }
   }
-} // Crop blog summary text
+} // While creating the project section
+// function moveLangSectionUp() {
+//     if (window.innerWidth > 1279) {
+//         const skillSection = document.querySelector("section.skills")
+//         const langSection = document.querySelector("section.languages")
+//         if (skillSection && langSection) {
+//             const skillUl = skillSection.querySelector("ul")
+//             const topValue = skillSection.clientHeight - skillUl.clientHeight - 64
+//             langSection.setAttribute("style", `top: -${topValue}px;`)
+//         }
+//     }
+// }
+// Crop blog summary text
 
 
 function cropAllBlogSums() {
@@ -2505,7 +2580,7 @@ function addWork(e) {
   var newIndex = workList.length;
   var newElement = document.createElement('div');
   newElement.className = "work-form";
-  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"workName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"work-up\">\uD83D\uDD3A</button><button class=\"work-down\">\uD83D\uDD3B</button><button class=\"work-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"workName_").concat(newIndex, "\" id=\"workName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workPos_").concat(newIndex, "\" class=\"sr-only\">Position</label>\n            <input type=\"text\" name=\"workPos_").concat(newIndex, "\" id=\"workPos_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workLoc_").concat(newIndex, "\" class=\"sr-only\">Location</label>\n            <input type=\"text\" name=\"workLoc_").concat(newIndex, "\" id=\"workLoc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"workStrtDate_").concat(newIndex, "\" id=\"workStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"workEndDate_").concat(newIndex, "\" id=\"workEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"workHi_").concat(newIndex, "\" id=\"workHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>");
+  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"workName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"work-up\">\uD83D\uDD3A</button><button class=\"work-down\">\uD83D\uDD3B</button><button class=\"work-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"workName_").concat(newIndex, "\" id=\"workName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workPos_").concat(newIndex, "\" class=\"sr-only\">Position</label>\n            <input type=\"text\" name=\"workPos_").concat(newIndex, "\" id=\"workPos_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workLoc_").concat(newIndex, "\" class=\"sr-only\">Location</label>\n            <input type=\"text\" name=\"workLoc_").concat(newIndex, "\" id=\"workLoc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"workStrtDate_").concat(newIndex, "\" id=\"workStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"workEndDate_").concat(newIndex, "\" id=\"workEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workSumm_").concat(newIndex, "\" class=\"sr-only\">Summary</label>\n            <input type=\"text\" name=\"workSumm_").concat(newIndex, "\" id=\"workSumm_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workUrl_").concat(newIndex, "\" class=\"sr-only\">URL</label>\n            <input type=\"url\" name=\"workUrl_").concat(newIndex, "\" id=\"workUrl_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"workHi_").concat(newIndex, "\" id=\"workHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>");
   assignWorkButtons(newElement);
   var listParent = document.querySelector('.work-form-container');
   listParent.appendChild(newElement);
@@ -2567,7 +2642,7 @@ function deleteWork(e) {
   workList = Array.from(document.querySelectorAll(".work-form"));
 }
 
-var WORK_TEXTAREA_INDEX = 5;
+var WORK_TEXTAREA_INDEX = 7;
 
 function modifyWorkIdx(targetItem, newIndex) {
   Array.from(targetItem.querySelectorAll('.input-group')).forEach(function (inputGroup, groupIdx) {
@@ -2576,6 +2651,103 @@ function modifyWorkIdx(targetItem, newIndex) {
     inputGroup.querySelector('label').setAttribute("for", newAttr);
 
     if (groupIdx === WORK_TEXTAREA_INDEX) {
+      inputGroup.querySelector('textarea').setAttribute("name", newAttr);
+      inputGroup.querySelector('textarea').setAttribute("id", newAttr);
+    } else {
+      inputGroup.querySelector('input').setAttribute("name", newAttr);
+      inputGroup.querySelector('input').setAttribute("id", newAttr);
+    }
+  });
+} ////////////////////////////////////////
+
+
+var projList = Array.from(document.querySelectorAll(".proj-form"));
+
+if (projList.length != 0 && projList[0]) {
+  projList.forEach(function (projItem) {
+    return assignProjButtons(projItem);
+  });
+}
+
+var addProjBtn = document.querySelector(".resume-editor .add-project button");
+if (addProjBtn) addProjBtn.addEventListener("click", addProj);
+
+function addProj(e) {
+  e.preventDefault();
+  var newIndex = projList.length;
+  var newElement = document.createElement('div');
+  newElement.className = "proj-form";
+  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"projName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"proj-up\">\uD83D\uDD3A</button><button class=\"proj-down\">\uD83D\uDD3B</button><button class=\"proj-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"projName_").concat(newIndex, "\" id=\"projName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projEnt_").concat(newIndex, "\" class=\"sr-only\">Entity</label>\n            <input type=\"text\" name=\"projEnt_").concat(newIndex, "\" id=\"projEnt_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projType_").concat(newIndex, "\" class=\"sr-only\">Type</label>\n            <input type=\"text\" name=\"projType_").concat(newIndex, "\" id=\"projType_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"projStrtDate_").concat(newIndex, "\" id=\"projStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"projEndDate_").concat(newIndex, "\" id=\"projEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projRoles_").concat(newIndex, "\" class=\"sr-only\">Roles</label>\n            <input type=\"text\" name=\"projRoles_").concat(newIndex, "\" id=\"projRoles_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projDesc_").concat(newIndex, "\" class=\"sr-only\">Description</label>\n            <input type=\"text\" name=\"projDesc_").concat(newIndex, "\" id=\"projDesc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"projHi_").concat(newIndex, "\" id=\"projHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>\n        <div class=\"input-group \">\n            <label for=projUrl_").concat(newIndex, "\" class=\"sr-only\">URL</label>\n            <input type=\"url\" name=\"projUrl_").concat(newIndex, "\" id=\"projUrl_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projKeys_").concat(newIndex, "\" class=\"sr-only\">Keys</label>\n            <input type=\"text\" name=\"projKeys_").concat(newIndex, "\" id=\"projKeys_").concat(newIndex, "\">\n        </div>");
+  assignProjButtons(newElement);
+  var listParent = document.querySelector('.proj-form-container');
+  listParent.appendChild(newElement);
+  projList = Array.from(document.querySelectorAll(".proj-form"));
+}
+
+function assignProjButtons(projItem) {
+  var buttonUp = projItem.querySelector(".proj-up");
+  buttonUp.addEventListener("click", function (e) {
+    return moveProj(e, "up");
+  });
+  var buttonDown = projItem.querySelector(".proj-down");
+  buttonDown.addEventListener("click", function (e) {
+    return moveProj(e, "down");
+  });
+  var buttonDel = projItem.querySelector(".proj-del");
+  buttonDel.addEventListener("click", deleteProj);
+}
+
+function moveProj(e, direction) {
+  e.preventDefault();
+  var movingItem = e.target.parentNode.parentNode.parentNode;
+  var index = parseInt(movingItem.querySelector('input').getAttribute("id").replace("projName_", ""));
+
+  if (direction === "up" && index || direction === "down" && index !== projList.length - 1) {
+    // Modify indexes
+    var newIdx = direction === "up" ? index - 1 : index + 1;
+    var referenceItem = projList[newIdx];
+    modifyProjIdx(referenceItem, index);
+    modifyProjIdx(movingItem, newIdx); //Move items visually
+
+    var listParent = document.querySelector('.proj-form-container');
+
+    if (direction === "down" && newIdx === projList.length - 1) {
+      listParent.removeChild(projList[newIdx]);
+      listParent.insertBefore(projList[newIdx], movingItem);
+    } else {
+      var refIdx = direction === "up" ? index - 1 : index + 2;
+      listParent.removeChild(movingItem);
+      listParent.insertBefore(movingItem, projList[refIdx]);
+    }
+
+    projList = Array.from(document.querySelectorAll(".proj-form"));
+  }
+}
+
+function deleteProj(e) {
+  e.preventDefault();
+  var deletingItem = e.target.parentNode.parentNode.parentNode;
+  var index = parseInt(deletingItem.querySelector('input').getAttribute("id").replace("projName_", "")); // Modify indexes
+
+  var changingItems = projList.slice(index + 1);
+  changingItems.forEach(function (chnItem, itmIdx) {
+    return modifyProjIdx(chnItem, itmIdx + index);
+  }); // Delete visually
+
+  var listParent = document.querySelector('.proj-form-container');
+  listParent.removeChild(projList[index]);
+  projList = Array.from(document.querySelectorAll(".proj-form"));
+}
+
+var PROJ_TEXTAREA_INDEX = 8;
+
+function modifyProjIdx(targetItem, newIndex) {
+  Array.from(targetItem.querySelectorAll('.input-group')).forEach(function (inputGroup, groupIdx) {
+    var oldAttrArr = inputGroup.querySelector('label').getAttribute("for").split("_");
+    var newAttr = oldAttrArr[0] + "_" + newIndex;
+    inputGroup.querySelector('label').setAttribute("for", newAttr);
+
+    if (groupIdx === PROJ_TEXTAREA_INDEX) {
       inputGroup.querySelector('textarea').setAttribute("name", newAttr);
       inputGroup.querySelector('textarea').setAttribute("id", newAttr);
     } else {

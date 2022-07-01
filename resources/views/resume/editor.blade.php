@@ -165,6 +165,28 @@
                                 <div class="error-msg">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="input-group @error('workSumm_'.$i) missing @enderror">
+                            <label for="workSumm_{{ $i }}" class="sr-only">Summary</label>
+                            <input type="text" name="workSumm_{{ $i }}" id="workSumm_{{ $i }}" @if (old('workSumm_'.$i))
+                                value="{{ old('workSumm_'.$i) }}"
+                            @else
+                                value="{{ $work[$i]["summary"] }}"
+                            @endif>
+                            @error('workSumm_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('workUrl_'.$i) missing @enderror">
+                            <label for="workUrl_{{ $i }}" class="sr-only">URL</label>
+                            <input type="url" name="workUrl_{{ $i }}" id="workUrl_{{ $i }}" @if (old('workUrl_'.$i))
+                                value="{{ old('workUrl_'.$i) }}"
+                            @else
+                                value="{{ $work[$i]["url"] }}"
+                            @endif>
+                            @error('workUrl_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <div class="input-group @error('workHi_'.$i) missing @enderror">
                             <label for="workHi_{{ $i }}" class="sr-only">Highlights</label>
@@ -182,6 +204,131 @@
                 @endfor
             </div>
             <div class="add-work">
+                <button>➕</button>
+            </div>
+
+            <h2>Portfolio</h2>
+            <div class="proj-form-container">
+                @for ($i = 0; $i < count($projects); $i++)
+                    <div class="proj-form">
+                        <div class="input-group @error('projName_'.$i) missing @enderror">
+                            <label for="projName_{{ $i }}" class="sr-only">Name <button class="proj-up">🔺</button><button class="proj-down">🔻</button><button class="proj-del">🗑️</button></label>
+                            <input type="text" name="projName_{{ $i }}" id="projName_{{ $i }}" @if (old('projName_'.$i))
+                                value="{{ old('projName_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["name"] }}"
+                            @endif>
+                            @error('projName_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projEnt_'.$i) missing @enderror">
+                            <label for="projEnt_{{ $i }}" class="sr-only">Entity</label>
+                            <input type="text" name="projEnt_{{ $i }}" id="projEnt_{{ $i }}" @if (old('projEnt_'.$i))
+                                value="{{ old('projEnt_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["entity"] }}"
+                            @endif>
+                            @error('projEnt_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projType_'.$i) missing @enderror">
+                            <label for="projType_{{ $i }}" class="sr-only">Type</label>
+                            <input type="text" name="projType_{{ $i }}" id="projType_{{ $i }}" @if (old('projType_'.$i))
+                                value="{{ old('projType_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["type"] }}"
+                            @endif>
+                            @error('projType_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projStrtDate_'.$i) missing @enderror">
+                            <label for="projStrtDate_{{ $i }}" class="sr-only">Start date</label>
+                            <input type="date" name="projStrtDate_{{ $i }}" id="projStrtDate_{{ $i }}" @if (old('projStrtDate_'.$i))
+                                value="{{ old('projStrtDate_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["startDate"] }}"
+                            @endif>
+                            @error('projStrtDate_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projEndDate_'.$i) missing @enderror">
+                            <label for="projEndDate_{{ $i }}" class="sr-only">End date</label>
+                            <input type="date" name="projEndDate_{{ $i }}" id="projEndDate_{{ $i }}" @if (old('projEndDate_'.$i))
+                                value="{{ old('projEndDate_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["endDate"] }}"
+                            @endif>
+                            @error('projEndDate_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projRoles_'.$i) missing @enderror">
+                            <label for="projRoles_{{ $i }}" class="sr-only">Roles</label>
+                            @php
+                                $prevRoles = "";
+                                if (old('projRoles_'.$i)) $prevRoles = old('projRoles_'.$i);
+                                else $prevRoles = implode(", ", $projects[$i]["roles"]);
+                            @endphp
+                            <input type="text" name="projRoles_{{ $i }}" id="projRoles_{{ $i }}" value="{{ $prevRoles }}" >
+                            @error('projRoles_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projUrl_'.$i) missing @enderror">
+                            <label for="projUrl_{{ $i }}" class="sr-only">URL</label>
+                            <input type="url" name="projUrl_{{ $i }}" id="projUrl_{{ $i }}" @if (old('projUrl_'.$i))
+                                value="{{ old('projUrl_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["url"] }}"
+                            @endif>
+                            @error('projUrl_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projDesc_'.$i) missing @enderror">
+                            <label for="projDesc_{{ $i }}" class="sr-only">Description</label>
+                            <input type="text" name="projDesc_{{ $i }}" id="projDesc_{{ $i }}" @if (old('projDesc_'.$i))
+                                value="{{ old('projDesc_'.$i) }}"
+                            @else
+                                value="{{ $projects[$i]["description"] }}"
+                            @endif>
+                            @error('projDesc_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="input-group @error('projHi_'.$i) missing @enderror">
+                            <label for="projHi_{{ $i }}" class="sr-only">Highlights</label>
+                            @php
+                                $prevHigh = "";
+                                if (old('projHi_'.$i)) $prevHigh = old('projHi_'.$i);
+                                else $prevHigh = implode("\n", $projects[$i]["highlights"]);
+                            @endphp
+                            <textarea name="projHi_{{ $i }}" id="projHi_{{ $i }}" cols="30" rows="4" placeholder="Post something!">{{ $prevHigh }}</textarea>
+                            @error('projHi_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('projKeys_'.$i) missing @enderror">
+                            <label for="projKeys_{{ $i }}" class="sr-only">Keywords</label>
+                            @php
+                                $prevKeys = "";
+                                if (old('projKeys_'.$i)) $prevKeys = old('projKeys_'.$i);
+                                else $prevKeys = implode(", ", $projects[$i]["keywords"]);
+                            @endphp
+                            <input type="text" name="projKeys_{{ $i }}" id="projKeys_{{ $i }}" value="{{ $prevKeys }}" >
+                            @error('projKeys_'.$i)
+                                <div class="error-msg">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                @endfor
+            </div>
+            <div class="add-project">
                 <button>➕</button>
             </div>
 

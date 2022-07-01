@@ -135,16 +135,18 @@ main > form.resume-editor {
     cursor: pointer;
 }
 
-.add-skill, .add-work {
+.add-skill, .add-work, .add-project {
     height: 3rem;
     width: 100%;
 }
 
-.add-skill button, .add-work button {
+.add-skill button, .add-work button, .add-project button {
     width: 75%;
     margin: 0% auto;
     display: block;
 }
+
+/* Work experience */
 
 .work-form {
     margin-bottom: 2rem;
@@ -156,6 +158,8 @@ main > form.resume-editor {
         "work-position-field work-position-field"
         "work-location-field work-location-field"
         "work-stdt-field work-endt-field"
+        "work-summ-field work-summ-field"
+        "work-url-field work-url-field"
         "work-high-field work-high-field";
 }
 
@@ -180,7 +184,74 @@ main > form.resume-editor {
 }
 
 .work-form .input-group:nth-child(6) {
+    grid-area: work-summ-field;
+}
+
+.work-form .input-group:nth-child(7) {
+    grid-area: work-url-field;
+}
+
+.work-form .input-group:nth-child(8) {
     grid-area: work-high-field;
+}
+
+/* Portfolio */
+
+.proj-form {
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "proj-name-field proj-name-field"
+        "proj-entity-field proj-entity-field"
+        "proj-type-field proj-type-field"
+        "proj-stdt-field proj-endt-field"
+        "proj-roles-field proj-roles-field"
+        "proj-url-field proj-url-field"
+        "proj-desc-field proj-desc-field"
+        "proj-high-field proj-high-field"
+        "proj-keys-field proj-keys-field";
+}
+
+.proj-form .input-group:nth-child(1) {
+    grid-area: proj-name-field;
+}
+
+.proj-form .input-group:nth-child(2) {
+    grid-area: proj-entity-field;
+}
+
+.proj-form .input-group:nth-child(3) {
+    grid-area: proj-type-field;
+}
+
+.proj-form .input-group:nth-child(4) {
+    grid-area: proj-stdt-field;
+}
+
+.proj-form .input-group:nth-child(5) {
+    grid-area: proj-endt-field;
+}
+
+.proj-form .input-group:nth-child(6) {
+    grid-area: proj-roles-field;
+}
+
+.proj-form .input-group:nth-child(7) {
+    grid-area: proj-url-field;
+}
+
+.proj-form .input-group:nth-child(8) {
+    grid-area: proj-desc-field;
+}
+
+.proj-form .input-group:nth-child(9) {
+    grid-area: proj-high-field;
+}
+
+.proj-form .input-group:nth-child(10) {
+    grid-area: proj-keys-field;
 }
 
 @media screen and (min-width: 560px) {
@@ -195,7 +266,19 @@ main > form.resume-editor {
             "work-name-field work-position-field"
             "work-location-field work-location-field"
             "work-stdt-field work-endt-field"
+            "work-summ-field work-url-field"
             "work-high-field work-high-field";
+    }
+
+    .proj-form {
+        grid-template-areas:
+            "proj-name-field proj-entity-field"
+            "proj-type-field proj-type-field"
+            "proj-stdt-field proj-endt-field"
+            "proj-roles-field proj-url-field"
+            "proj-desc-field proj-desc-field"
+            "proj-high-field proj-high-field"
+            "proj-keys-field proj-keys-field";
     }
 }
 
@@ -209,7 +292,19 @@ main > form.resume-editor {
         grid-template-areas:
             "work-name-field work-position-field work-location-field"
             "work-stdt-field work-endt-field ."
+            "work-summ-field work-summ-field work-url-field"
             "work-high-field work-high-field work-high-field";
+    }
+
+    .proj-form {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "proj-name-field proj-entity-field proj-type-field"
+            "proj-stdt-field proj-endt-field ."
+            "proj-roles-field proj-roles-field proj-url-field"
+            "proj-desc-field proj-desc-field proj-desc-field"
+            "proj-high-field proj-high-field proj-high-field"
+            "proj-keys-field proj-keys-field .";
     }
 
     .skillAndLangForm {
@@ -223,7 +318,4 @@ main > form.resume-editor {
         grid-template-areas:
             "prof1-field prof2-field prof3-field"
     }
-}
-
-@media screen and (min-width: 1280px) {
 }

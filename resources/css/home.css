@@ -66,14 +66,14 @@ summary.work-position {
 
 /* Component - Projects' items */
 
-.projects li {
+.projects > ul > li {
     display: grid;
-    grid-template-rows: calc(var(--proj-img-size) + 1rem) 1fr;
+    grid-template-rows: calc(var(--proj-img-size) + 2rem) 2.5rem 1fr;
     grid-template-columns: var(--proj-img-size) 1fr;
     grid-template-areas:
         "proj-img proj-info"
-        "proj-desc proj-desc"
-        "proj-link proj-link";
+        "proj-tags proj-tags"
+        "proj-desc proj-desc";
     column-gap: 1rem;
     margin-bottom: 2rem;
     align-items: center;
@@ -98,6 +98,22 @@ summary.work-position {
     overflow: hidden;
 }
 
+.proj-type {
+    padding: 0% .5rem;
+}
+
+.proj-tags {
+    grid-area: proj-tags;
+    display: flex;
+    flex-direction: row;
+}
+
+.proj-tags > li {
+    padding: .25rem .5rem;
+    margin-right: .5rem;
+    width: max-content;
+}
+
 .proj-desc {
     grid-area: proj-desc;
     padding: 1rem 0px;
@@ -117,6 +133,16 @@ summary.work-position {
 
 .proj-desc p {
     margin-bottom: 0px;
+}
+
+.proj-desc-body.on {
+    position: fixed;
+    width: 640px;
+    padding: 40px;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }
 
 .proj-link {
@@ -144,10 +170,7 @@ section.skills ul, section.languages ul {
     /* Projects */
 
     .projects li {
-        grid-template-columns: var(--proj-img-size) 1fr 80px;
-        grid-template-areas:
-            "proj-img proj-info proj-link"
-            "proj-desc proj-desc proj-desc";
+        grid-template-columns: var(--proj-img-size) 2rem 1fr;
     }
 }
 
@@ -226,8 +249,8 @@ section.skills ul, section.languages ul {
         grid-template-columns: var(--proj-img-size) 1fr;
         grid-template-areas:
             "proj-img proj-info"
-            "proj-desc proj-desc"
-            "proj-link proj-link";
+            "proj-tags proj-tags"
+            "proj-desc proj-desc";
         height: fit-content;
     }
 
@@ -279,7 +302,11 @@ section.skills ul, section.languages ul {
     /* Languages section */
 
     /* While creating the portfolio section */
-    section.languages {
+    /* section.languages {
         position: relative;
-    }
+    } */
+}
+
+.blackout.on.modal {
+    display: initial;
 }

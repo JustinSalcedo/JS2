@@ -47,6 +47,18 @@ summary.work-position:hover, details[open] summary.work-position {
     text-decoration: underline;
 }
 
+.proj-type {
+    text-transform: uppercase;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: lighter;
+    font-size: .875rem;
+}
+
+.proj-tags li {
+    font-size: 0.875rem;
+    font-family: "Ubuntu", sans-serif;
+}
+
 .proj-link {
     font-weight: bold;
     text-decoration: none;
@@ -92,6 +104,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --bkg-proj-link: hsl(113, 48%, 54%);
     --bkg-proj-link-hvr: hsl(113, 48%, 49%);
     --bkg-page-link: hsl(208, 48%, 54%);
+    --bkg-tag: var(--paper-white);
 
     --main-footer: var(--paper-white);
 
@@ -100,6 +113,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
     --gray-text: hsla(260, 2%, 60%);
+    --tag-text: var(--common-black);
 
     /* Borders */
     --light-border: 1px solid var(--light-gray);
@@ -136,6 +150,11 @@ body.dark-theme {
 body {
     background-color: var(--bkg-main-page);
     color: var(--body-text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .blackout.on {
@@ -194,6 +213,22 @@ body {
     color: inherit;
     text-decoration: none;
     font-style: italic;
+}
+
+.proj-type {
+    background-color: var(--bkg-tag);
+    color: var(--tag-text);
+}
+
+.proj-tags li {
+    background-color: var(--bkg-tag);
+    border-radius: 8px;
+    color: var(--tag-text);
+}
+
+.proj-desc-body.on {
+    background: var(--bkg-main-page);
+    border-radius: 20px;
 }
 
 .proj-link {
@@ -697,14 +732,14 @@ summary.work-position {
 
 /* Component - Projects' items */
 
-.projects li {
+.projects > ul > li {
     display: grid;
-    grid-template-rows: calc(var(--proj-img-size) + 1rem) 1fr;
+    grid-template-rows: calc(var(--proj-img-size) + 2rem) 2.5rem 1fr;
     grid-template-columns: var(--proj-img-size) 1fr;
     grid-template-areas:
         "proj-img proj-info"
-        "proj-desc proj-desc"
-        "proj-link proj-link";
+        "proj-tags proj-tags"
+        "proj-desc proj-desc";
     -moz-column-gap: 1rem;
          column-gap: 1rem;
     margin-bottom: 2rem;
@@ -730,6 +765,24 @@ summary.work-position {
     overflow: hidden;
 }
 
+.proj-type {
+    padding: 0% .5rem;
+}
+
+.proj-tags {
+    grid-area: proj-tags;
+    display: flex;
+    flex-direction: row;
+}
+
+.proj-tags > li {
+    padding: .25rem .5rem;
+    margin-right: .5rem;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+}
+
 .proj-desc {
     grid-area: proj-desc;
     padding: 1rem 0px;
@@ -749,6 +802,16 @@ summary.work-position {
 
 .proj-desc p {
     margin-bottom: 0px;
+}
+
+.proj-desc-body.on {
+    position: fixed;
+    width: 640px;
+    padding: 40px;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }
 
 .proj-link {
@@ -776,10 +839,7 @@ section.skills ul, section.languages ul {
     /* Projects */
 
     .projects li {
-        grid-template-columns: var(--proj-img-size) 1fr 80px;
-        grid-template-areas:
-            "proj-img proj-info proj-link"
-            "proj-desc proj-desc proj-desc";
+        grid-template-columns: var(--proj-img-size) 2rem 1fr;
     }
 }
 
@@ -859,8 +919,8 @@ section.skills ul, section.languages ul {
         grid-template-columns: var(--proj-img-size) 1fr;
         grid-template-areas:
             "proj-img proj-info"
-            "proj-desc proj-desc"
-            "proj-link proj-link";
+            "proj-tags proj-tags"
+            "proj-desc proj-desc";
         height: -webkit-fit-content;
         height: -moz-fit-content;
         height: fit-content;
@@ -915,9 +975,13 @@ section.skills ul, section.languages ul {
     /* Languages section */
 
     /* While creating the portfolio section */
-    section.languages {
+    /* section.languages {
         position: relative;
-    }
+    } */
+}
+
+.blackout.on.modal {
+    display: initial;
 }
 
 body {
@@ -969,6 +1033,18 @@ summary.work-position:hover, details[open] summary.work-position {
     text-decoration: underline;
 }
 
+.proj-type {
+    text-transform: uppercase;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: lighter;
+    font-size: .875rem;
+}
+
+.proj-tags li {
+    font-size: 0.875rem;
+    font-family: "Ubuntu", sans-serif;
+}
+
 .proj-link {
     font-weight: bold;
     text-decoration: none;
@@ -1014,6 +1090,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --bkg-proj-link: hsl(113, 48%, 54%);
     --bkg-proj-link-hvr: hsl(113, 48%, 49%);
     --bkg-page-link: hsl(208, 48%, 54%);
+    --bkg-tag: var(--paper-white);
 
     --main-footer: var(--paper-white);
 
@@ -1022,6 +1099,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
     --gray-text: hsla(260, 2%, 60%);
+    --tag-text: var(--common-black);
 
     /* Borders */
     --light-border: 1px solid var(--light-gray);
@@ -1058,6 +1136,11 @@ body.dark-theme {
 body {
     background-color: var(--bkg-main-page);
     color: var(--body-text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .blackout.on {
@@ -1116,6 +1199,22 @@ body {
     color: inherit;
     text-decoration: none;
     font-style: italic;
+}
+
+.proj-type {
+    background-color: var(--bkg-tag);
+    color: var(--tag-text);
+}
+
+.proj-tags li {
+    background-color: var(--bkg-tag);
+    border-radius: 8px;
+    color: var(--tag-text);
+}
+
+.proj-desc-body.on {
+    background: var(--bkg-main-page);
+    border-radius: 20px;
 }
 
 .proj-link {
@@ -1687,16 +1786,18 @@ main > form.resume-editor {
     cursor: pointer;
 }
 
-.add-skill, .add-work {
+.add-skill, .add-work, .add-project {
     height: 3rem;
     width: 100%;
 }
 
-.add-skill button, .add-work button {
+.add-skill button, .add-work button, .add-project button {
     width: 75%;
     margin: 0% auto;
     display: block;
 }
+
+/* Work experience */
 
 .work-form {
     margin-bottom: 2rem;
@@ -1708,6 +1809,8 @@ main > form.resume-editor {
         "work-position-field work-position-field"
         "work-location-field work-location-field"
         "work-stdt-field work-endt-field"
+        "work-summ-field work-summ-field"
+        "work-url-field work-url-field"
         "work-high-field work-high-field";
 }
 
@@ -1732,7 +1835,74 @@ main > form.resume-editor {
 }
 
 .work-form .input-group:nth-child(6) {
+    grid-area: work-summ-field;
+}
+
+.work-form .input-group:nth-child(7) {
+    grid-area: work-url-field;
+}
+
+.work-form .input-group:nth-child(8) {
     grid-area: work-high-field;
+}
+
+/* Portfolio */
+
+.proj-form {
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "proj-name-field proj-name-field"
+        "proj-entity-field proj-entity-field"
+        "proj-type-field proj-type-field"
+        "proj-stdt-field proj-endt-field"
+        "proj-roles-field proj-roles-field"
+        "proj-url-field proj-url-field"
+        "proj-desc-field proj-desc-field"
+        "proj-high-field proj-high-field"
+        "proj-keys-field proj-keys-field";
+}
+
+.proj-form .input-group:nth-child(1) {
+    grid-area: proj-name-field;
+}
+
+.proj-form .input-group:nth-child(2) {
+    grid-area: proj-entity-field;
+}
+
+.proj-form .input-group:nth-child(3) {
+    grid-area: proj-type-field;
+}
+
+.proj-form .input-group:nth-child(4) {
+    grid-area: proj-stdt-field;
+}
+
+.proj-form .input-group:nth-child(5) {
+    grid-area: proj-endt-field;
+}
+
+.proj-form .input-group:nth-child(6) {
+    grid-area: proj-roles-field;
+}
+
+.proj-form .input-group:nth-child(7) {
+    grid-area: proj-url-field;
+}
+
+.proj-form .input-group:nth-child(8) {
+    grid-area: proj-desc-field;
+}
+
+.proj-form .input-group:nth-child(9) {
+    grid-area: proj-high-field;
+}
+
+.proj-form .input-group:nth-child(10) {
+    grid-area: proj-keys-field;
 }
 
 @media screen and (min-width: 560px) {
@@ -1747,7 +1917,19 @@ main > form.resume-editor {
             "work-name-field work-position-field"
             "work-location-field work-location-field"
             "work-stdt-field work-endt-field"
+            "work-summ-field work-url-field"
             "work-high-field work-high-field";
+    }
+
+    .proj-form {
+        grid-template-areas:
+            "proj-name-field proj-entity-field"
+            "proj-type-field proj-type-field"
+            "proj-stdt-field proj-endt-field"
+            "proj-roles-field proj-url-field"
+            "proj-desc-field proj-desc-field"
+            "proj-high-field proj-high-field"
+            "proj-keys-field proj-keys-field";
     }
 }
 
@@ -1761,7 +1943,19 @@ main > form.resume-editor {
         grid-template-areas:
             "work-name-field work-position-field work-location-field"
             "work-stdt-field work-endt-field ."
+            "work-summ-field work-summ-field work-url-field"
             "work-high-field work-high-field work-high-field";
+    }
+
+    .proj-form {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "proj-name-field proj-entity-field proj-type-field"
+            "proj-stdt-field proj-endt-field ."
+            "proj-roles-field proj-roles-field proj-url-field"
+            "proj-desc-field proj-desc-field proj-desc-field"
+            "proj-high-field proj-high-field proj-high-field"
+            "proj-keys-field proj-keys-field .";
     }
 
     .skillAndLangForm {
@@ -1775,9 +1969,6 @@ main > form.resume-editor {
         grid-template-areas:
             "prof1-field prof2-field prof3-field"
     }
-}
-
-@media screen and (min-width: 1280px) {
 }
 
 body {
@@ -1829,6 +2020,18 @@ summary.work-position:hover, details[open] summary.work-position {
     text-decoration: underline;
 }
 
+.proj-type {
+    text-transform: uppercase;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: lighter;
+    font-size: .875rem;
+}
+
+.proj-tags li {
+    font-size: 0.875rem;
+    font-family: "Ubuntu", sans-serif;
+}
+
 .proj-link {
     font-weight: bold;
     text-decoration: none;
@@ -1874,6 +2077,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --bkg-proj-link: hsl(113, 48%, 54%);
     --bkg-proj-link-hvr: hsl(113, 48%, 49%);
     --bkg-page-link: hsl(208, 48%, 54%);
+    --bkg-tag: var(--paper-white);
 
     --main-footer: var(--paper-white);
 
@@ -1882,6 +2086,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
     --gray-text: hsla(260, 2%, 60%);
+    --tag-text: var(--common-black);
 
     /* Borders */
     --light-border: 1px solid var(--light-gray);
@@ -1918,6 +2123,11 @@ body.dark-theme {
 body {
     background-color: var(--bkg-main-page);
     color: var(--body-text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .blackout.on {
@@ -1976,6 +2186,22 @@ body {
     color: inherit;
     text-decoration: none;
     font-style: italic;
+}
+
+.proj-type {
+    background-color: var(--bkg-tag);
+    color: var(--tag-text);
+}
+
+.proj-tags li {
+    background-color: var(--bkg-tag);
+    border-radius: 8px;
+    color: var(--tag-text);
+}
+
+.proj-desc-body.on {
+    background: var(--bkg-main-page);
+    border-radius: 20px;
 }
 
 .proj-link {

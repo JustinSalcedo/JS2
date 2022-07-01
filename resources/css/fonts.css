@@ -47,6 +47,18 @@ summary.work-position:hover, details[open] summary.work-position {
     text-decoration: underline;
 }
 
+.proj-type {
+    text-transform: uppercase;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: lighter;
+    font-size: .875rem;
+}
+
+.proj-tags li {
+    font-size: 0.875rem;
+    font-family: "Ubuntu", sans-serif;
+}
+
 .proj-link {
     font-weight: bold;
     text-decoration: none;

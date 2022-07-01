@@ -59,13 +59,15 @@
                     @endphp
                     <li>
                         <div class="work-img">
-                            <img src="{{ asset('storage/media/work-default.png') }}" alt="{{ $workXp["name"] }}">
+                            <a href="{{ $workXp["url"] }}">
+                                <img src="{{ asset('storage/media/work-default.png') }}" alt="{{ $workXp["name"] }}">
+                            </a>
                         </div>
                         <div class="work-info">
                             <h3 class="work-title">
                                 {{ $workXp["position"] }}<span class="work-start-date">, {{ date('Y', $startDate) }}</span>
                             </h3>
-                            <p class="work-location">{{ $workXp["location"] }}</p>
+                            <p class="work-location"><a href="{{ $workXp["url"] }}">{{ $workXp["name"] }}</a> | <i>{{ $workXp["location"] }}</i></p>
                         </div>
                         <div class="work-desc">
                             <ul>
@@ -80,6 +82,52 @@
                                     </li>
                                 @endforeach
                             </ul>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+        <section class="projects" id="portfolio">
+            <h2>Projects</h2>
+            <ul>
+                @php
+                    usort($projects, function ($a, $b) {
+                        return $a["startDate"] < $b["startDate"];
+                    });
+                @endphp
+                @foreach ($projects as $project)
+                    <li>
+                        <div class="proj-img">
+                            <a href="{{ $project["url"] }}">
+                                <img src="{{ asset('storage/media/proj-default.png') }}" alt="{{ $project["name"] }}">
+                            </a>
+                        </div>
+                        <div class="proj-info">
+                            <h3 class="proj-title">
+                                <a href="{{ $project["url"] }}">{{ $project["name"] }}</a>
+                                <span class="proj-type">{{ $project["type"] }}</span>
+                            </h3>
+                            <p class="proj-subtitle">{{ $project["description"] }}</p>
+                        </div>
+                        @php
+                            $tagSet = array_slice($project["keywords"], 0, 3);
+                        @endphp
+                        <ul class="proj-tags">
+                            @foreach ($tagSet as $tag)
+                                <li>{{ $tag }}</li>
+                            @endforeach
+                        </ul>
+                        <div class="proj-desc">
+                            <details>
+                                <summary></summary>
+                                <div class="proj-desc-body">
+                                    <ul>
+                                        @foreach ($project["highlights"] as $highlight)
+                                            <li><p>{{ $highlight }}</p></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </details>
                         </div>
                     </li>
                 @endforeach
