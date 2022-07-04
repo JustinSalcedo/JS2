@@ -55,7 +55,7 @@ summary.work-position:hover, details[open] summary.work-position {
 }
 
 .proj-tags li {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-family: "Ubuntu", sans-serif;
 }
 
@@ -66,7 +66,7 @@ summary.work-position:hover, details[open] summary.work-position {
 
 /* Forms */
 
-.input-group input, .input-group button, .input-group textarea {
+.input-group input, .input-group button, .input-group textarea, .work-add-timg {
     font-size: 1rem;
     font-family: inherit;
 }

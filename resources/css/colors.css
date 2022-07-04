@@ -126,6 +126,10 @@ a {
     font-style: italic;
 }
 
+.proj-img img {
+    border-radius: 8px;
+}
+
 .proj-type {
     background-color: var(--bkg-tag);
     color: var(--tag-text);
@@ -135,6 +139,10 @@ a {
     background-color: var(--bkg-tag);
     border-radius: 8px;
     color: var(--tag-text);
+}
+
+.proj-tags li:first-child {
+    border-radius: 0% 8px 0% 8px;
 }
 
 .proj-desc-body.on {
@@ -250,10 +258,16 @@ footer {
 
 /* Blog editor */
 
-.resume-editor .input-group label button {
+.resume-editor .input-group label button, .work-add-timg {
     background-color: initial;
 }
 
-.resume-editor .input-group label button:hover {
+.resume-editor .input-group label button:hover, .work-add-timg:hover {
     background-color: var(--light-gray);
+}
+
+.work-add-timg {
+    border: none;
+    color: var(--body-text);
+    border-radius: 8px;
 }

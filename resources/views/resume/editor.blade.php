@@ -2,7 +2,7 @@
 
 @section('content')
     <main class="form-body">
-        <form action="" method="POST" class="resume-editor">
+        <form action="" method="POST" class="resume-editor" enctype="multipart/form-data">
             @csrf
             <h2>Personal information</h2>
             <div class="res-basics-form">
@@ -200,6 +200,18 @@
                                 <div class="error-msg">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="work-timg-field">
+                            @if (array_key_exists("thumbnail", $work[$i]))
+                                <input type="hidden" name="workOlTimg_{{ $i }}" id="workOlTimg_{{ $i }}"
+                                    value="{{ $work[$i]["thumbnail"] }}">
+                                <div class="timg-preview">
+                                    <img src="{{ asset($work[$i]["thumbnail"]) }}" alt="thumbnail">
+                                </div>
+                                <button class="work-add-timg">🖼️ Replace this thumbnail</button>
+                            @else
+                                <button class="work-add-timg">🖼️ Add a thumbnail (optional)</button>
+                            @endif
+                        </div>
                     </div>
                 @endfor
             </div>
@@ -324,6 +336,18 @@
                             @error('projKeys_'.$i)
                                 <div class="error-msg">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="proj-timg-field">
+                            @if (array_key_exists("thumbnail", $projects[$i]))
+                                <input type="hidden" name="projOlTimg_{{ $i }}" id="projOlTimg_{{ $i }}"
+                                    value="{{ $projects[$i]["thumbnail"] }}">
+                                <div class="timg-preview">
+                                    <img src="{{ asset($projects[$i]["thumbnail"]) }}" alt="thumbnail">
+                                </div>
+                                <button class="proj-add-timg">🖼️ Replace this thumbnail</button>
+                            @else
+                                <button class="proj-add-timg">🖼️ Add a thumbnail (optional)</button>
+                            @endif
                         </div>
                     </div>
                 @endfor

@@ -146,7 +146,8 @@ function addWork(e) {
         <div class="input-group ">
             <label for="workHi_${newIndex}" class="sr-only">Highlights</label>
             <textarea name="workHi_${newIndex}" id="workHi_${newIndex}" cols="30" rows="4" placeholder="Tell something great..."></textarea>
-        </div>`
+        </div>
+        <button class="work-add-timg">🖼️ Add a thumbnail (optional)</button>`
 
     assignWorkButtons(newElement)
 
@@ -165,6 +166,11 @@ function assignWorkButtons(workItem) {
 
     const buttonDel = workItem.querySelector(".work-del")
     buttonDel.addEventListener("click", deleteWork)
+
+    const buttonAddTimg = workItem.querySelector(".work-add-timg")
+    if (buttonAddTimg) {
+        buttonAddTimg.addEventListener("click", addWorkTimgField)
+    }
 }
 
 function moveWork(e, direction) {
@@ -228,6 +234,58 @@ function modifyWorkIdx(targetItem, newIndex) {
     })
 }
 
+function addWorkTimgField(e) {
+    e.preventDefault()
+    const workItem = e.target.parentNode.parentNode
+    const index = parseInt(workItem.querySelector('input').getAttribute("id").replace("workName_", ""))
+
+    // Create thumbnail preview area
+    const timgView = document.createElement("div")
+    timgView.className = "timg-preview"
+    timgView.innerHTML = `
+        <img>`
+
+    // Create thumbnail image input
+    const timgField = document.createElement("div")
+    timgField.className = "input-group"
+    timgField.innerHTML = `
+        <label for="workTimg_${index}" class="sr-only">Thumbnail (optional)</label>
+        <input type="file" accept="image/png, image/jpeg" name="workTimg_${index}" id="workTimg_${index}">`
+
+
+    timgField.querySelector("input").addEventListener("input", e => previewTimg(e, index, "work"))
+
+    const workTimgField = workItem.querySelector(".work-timg-field")
+    e.target.removeEventListener("click", addWorkTimgField)
+    workTimgField.removeChild(e.target)
+    if (!workTimgField.querySelector(".timg-preview")) {
+        workTimgField.appendChild(timgView)
+    }
+    workTimgField.appendChild(timgField)
+}
+
+function previewTimg(e, index, type) {
+    const file = e.target.files[0]
+
+    if (file.type && !file.type.startsWith('image/')) {
+        console.log('File is not an image.', file.type, file);
+        return;
+    }
+
+    const timgPreview = e.target.parentNode.parentNode.querySelector(".timg-preview")
+
+    const img = timgPreview.querySelector("img")
+    const reader = new FileReader();
+    reader.addEventListener('load', event => {
+        img.src = event.target.result
+        const oldTimg = document.getElementById(`${type}OlTimg_${index}`)
+        if (oldTimg) {
+            timgPreview.parentNode.removeChild(oldTimg)
+        }
+    })
+    reader.readAsDataURL(file)
+}
+
 
 ////////////////////////////////////////
 
@@ -287,7 +345,8 @@ function addProj(e) {
         <div class="input-group ">
             <label for="projKeys_${newIndex}" class="sr-only">Keys</label>
             <input type="text" name="projKeys_${newIndex}" id="projKeys_${newIndex}">
-        </div>`
+        </div>
+        <button class="proj-add-timg">🖼️ Add a thumbnail (optional)</button>`
 
     assignProjButtons(newElement)
 
@@ -306,6 +365,11 @@ function assignProjButtons(projItem) {
 
     const buttonDel = projItem.querySelector(".proj-del")
     buttonDel.addEventListener("click", deleteProj)
+
+    const buttonAddTimg = projItem.querySelector(".proj-add-timg")
+    if (buttonAddTimg) {
+        buttonAddTimg.addEventListener("click", addProjTimgField)
+    }
 }
 
 function moveProj(e, direction) {
@@ -367,4 +431,34 @@ function modifyProjIdx(targetItem, newIndex) {
             inputGroup.querySelector('input').setAttribute("id", newAttr)
         }
     })
+}
+
+function addProjTimgField(e) {
+    e.preventDefault()
+    const projItem = e.target.parentNode.parentNode
+    const index = parseInt(projItem.querySelector('input').getAttribute("id").replace("projName_", ""))
+
+    // Create thumbnail preview area
+    const timgView = document.createElement("div")
+    timgView.className = "timg-preview"
+    timgView.innerHTML = `
+        <img>`
+
+    // Create thumbnail image input
+    const timgField = document.createElement("div")
+    timgField.className = "input-group"
+    timgField.innerHTML = `
+        <label for="projTimg_${index}" class="sr-only">Thumbnail (optional)</label>
+        <input type="file" accept="image/png, image/jpeg" name="projTimg_${index}" id="projTimg_${index}">`
+
+
+    timgField.querySelector("input").addEventListener("input", e => previewTimg(e, index, "proj"))
+
+    const projTimgField = projItem.querySelector(".proj-timg-field")
+    e.target.removeEventListener("click", addProjTimgField)
+    projTimgField.removeChild(e.target)
+    if (!projTimgField.querySelector(".timg-preview")) {
+        projTimgField.appendChild(timgView)
+    }
+    projTimgField.appendChild(timgField)
 }

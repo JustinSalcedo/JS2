@@ -2580,7 +2580,7 @@ function addWork(e) {
   var newIndex = workList.length;
   var newElement = document.createElement('div');
   newElement.className = "work-form";
-  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"workName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"work-up\">\uD83D\uDD3A</button><button class=\"work-down\">\uD83D\uDD3B</button><button class=\"work-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"workName_").concat(newIndex, "\" id=\"workName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workPos_").concat(newIndex, "\" class=\"sr-only\">Position</label>\n            <input type=\"text\" name=\"workPos_").concat(newIndex, "\" id=\"workPos_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workLoc_").concat(newIndex, "\" class=\"sr-only\">Location</label>\n            <input type=\"text\" name=\"workLoc_").concat(newIndex, "\" id=\"workLoc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"workStrtDate_").concat(newIndex, "\" id=\"workStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"workEndDate_").concat(newIndex, "\" id=\"workEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workSumm_").concat(newIndex, "\" class=\"sr-only\">Summary</label>\n            <input type=\"text\" name=\"workSumm_").concat(newIndex, "\" id=\"workSumm_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workUrl_").concat(newIndex, "\" class=\"sr-only\">URL</label>\n            <input type=\"url\" name=\"workUrl_").concat(newIndex, "\" id=\"workUrl_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"workHi_").concat(newIndex, "\" id=\"workHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>");
+  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"workName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"work-up\">\uD83D\uDD3A</button><button class=\"work-down\">\uD83D\uDD3B</button><button class=\"work-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"workName_").concat(newIndex, "\" id=\"workName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workPos_").concat(newIndex, "\" class=\"sr-only\">Position</label>\n            <input type=\"text\" name=\"workPos_").concat(newIndex, "\" id=\"workPos_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workLoc_").concat(newIndex, "\" class=\"sr-only\">Location</label>\n            <input type=\"text\" name=\"workLoc_").concat(newIndex, "\" id=\"workLoc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"workStrtDate_").concat(newIndex, "\" id=\"workStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"workEndDate_").concat(newIndex, "\" id=\"workEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workSumm_").concat(newIndex, "\" class=\"sr-only\">Summary</label>\n            <input type=\"text\" name=\"workSumm_").concat(newIndex, "\" id=\"workSumm_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workUrl_").concat(newIndex, "\" class=\"sr-only\">URL</label>\n            <input type=\"url\" name=\"workUrl_").concat(newIndex, "\" id=\"workUrl_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"workHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"workHi_").concat(newIndex, "\" id=\"workHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>\n        <button class=\"work-add-timg\">\uD83D\uDDBC\uFE0F Add a thumbnail (optional)</button>");
   assignWorkButtons(newElement);
   var listParent = document.querySelector('.work-form-container');
   listParent.appendChild(newElement);
@@ -2598,6 +2598,11 @@ function assignWorkButtons(workItem) {
   });
   var buttonDel = workItem.querySelector(".work-del");
   buttonDel.addEventListener("click", deleteWork);
+  var buttonAddTimg = workItem.querySelector(".work-add-timg");
+
+  if (buttonAddTimg) {
+    buttonAddTimg.addEventListener("click", addWorkTimgField);
+  }
 }
 
 function moveWork(e, direction) {
@@ -2658,6 +2663,54 @@ function modifyWorkIdx(targetItem, newIndex) {
       inputGroup.querySelector('input').setAttribute("id", newAttr);
     }
   });
+}
+
+function addWorkTimgField(e) {
+  e.preventDefault();
+  var workItem = e.target.parentNode.parentNode;
+  var index = parseInt(workItem.querySelector('input').getAttribute("id").replace("workName_", "")); // Create thumbnail preview area
+
+  var timgView = document.createElement("div");
+  timgView.className = "timg-preview";
+  timgView.innerHTML = "\n        <img>"; // Create thumbnail image input
+
+  var timgField = document.createElement("div");
+  timgField.className = "input-group";
+  timgField.innerHTML = "\n        <label for=\"workTimg_".concat(index, "\" class=\"sr-only\">Thumbnail (optional)</label>\n        <input type=\"file\" accept=\"image/png, image/jpeg\" name=\"workTimg_").concat(index, "\" id=\"workTimg_").concat(index, "\">");
+  timgField.querySelector("input").addEventListener("input", function (e) {
+    return previewTimg(e, index, "work");
+  });
+  var workTimgField = workItem.querySelector(".work-timg-field");
+  e.target.removeEventListener("click", addWorkTimgField);
+  workTimgField.removeChild(e.target);
+
+  if (!workTimgField.querySelector(".timg-preview")) {
+    workTimgField.appendChild(timgView);
+  }
+
+  workTimgField.appendChild(timgField);
+}
+
+function previewTimg(e, index, type) {
+  var file = e.target.files[0];
+
+  if (file.type && !file.type.startsWith('image/')) {
+    console.log('File is not an image.', file.type, file);
+    return;
+  }
+
+  var timgPreview = e.target.parentNode.parentNode.querySelector(".timg-preview");
+  var img = timgPreview.querySelector("img");
+  var reader = new FileReader();
+  reader.addEventListener('load', function (event) {
+    img.src = event.target.result;
+    var oldTimg = document.getElementById("".concat(type, "OlTimg_").concat(index));
+
+    if (oldTimg) {
+      timgPreview.parentNode.removeChild(oldTimg);
+    }
+  });
+  reader.readAsDataURL(file);
 } ////////////////////////////////////////
 
 
@@ -2677,7 +2730,7 @@ function addProj(e) {
   var newIndex = projList.length;
   var newElement = document.createElement('div');
   newElement.className = "proj-form";
-  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"projName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"proj-up\">\uD83D\uDD3A</button><button class=\"proj-down\">\uD83D\uDD3B</button><button class=\"proj-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"projName_").concat(newIndex, "\" id=\"projName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projEnt_").concat(newIndex, "\" class=\"sr-only\">Entity</label>\n            <input type=\"text\" name=\"projEnt_").concat(newIndex, "\" id=\"projEnt_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projType_").concat(newIndex, "\" class=\"sr-only\">Type</label>\n            <input type=\"text\" name=\"projType_").concat(newIndex, "\" id=\"projType_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"projStrtDate_").concat(newIndex, "\" id=\"projStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"projEndDate_").concat(newIndex, "\" id=\"projEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projRoles_").concat(newIndex, "\" class=\"sr-only\">Roles</label>\n            <input type=\"text\" name=\"projRoles_").concat(newIndex, "\" id=\"projRoles_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projDesc_").concat(newIndex, "\" class=\"sr-only\">Description</label>\n            <input type=\"text\" name=\"projDesc_").concat(newIndex, "\" id=\"projDesc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"projHi_").concat(newIndex, "\" id=\"projHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>\n        <div class=\"input-group \">\n            <label for=projUrl_").concat(newIndex, "\" class=\"sr-only\">URL</label>\n            <input type=\"url\" name=\"projUrl_").concat(newIndex, "\" id=\"projUrl_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projKeys_").concat(newIndex, "\" class=\"sr-only\">Keys</label>\n            <input type=\"text\" name=\"projKeys_").concat(newIndex, "\" id=\"projKeys_").concat(newIndex, "\">\n        </div>");
+  newElement.innerHTML = "\n        <div class=\"input-group \">\n            <label for=\"projName_".concat(newIndex, "\" class=\"sr-only\">Name <button class=\"proj-up\">\uD83D\uDD3A</button><button class=\"proj-down\">\uD83D\uDD3B</button><button class=\"proj-del\">\uD83D\uDDD1\uFE0F</button></label>\n            <input type=\"text\" name=\"projName_").concat(newIndex, "\" id=\"projName_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projEnt_").concat(newIndex, "\" class=\"sr-only\">Entity</label>\n            <input type=\"text\" name=\"projEnt_").concat(newIndex, "\" id=\"projEnt_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projType_").concat(newIndex, "\" class=\"sr-only\">Type</label>\n            <input type=\"text\" name=\"projType_").concat(newIndex, "\" id=\"projType_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projStrtDate_").concat(newIndex, "\" class=\"sr-only\">Start date</label>\n            <input type=\"date\" name=\"projStrtDate_").concat(newIndex, "\" id=\"projStrtDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projEndDate_").concat(newIndex, "\" class=\"sr-only\">End date</label>\n            <input type=\"date\" name=\"projEndDate_").concat(newIndex, "\" id=\"projEndDate_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projRoles_").concat(newIndex, "\" class=\"sr-only\">Roles</label>\n            <input type=\"text\" name=\"projRoles_").concat(newIndex, "\" id=\"projRoles_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projDesc_").concat(newIndex, "\" class=\"sr-only\">Description</label>\n            <input type=\"text\" name=\"projDesc_").concat(newIndex, "\" id=\"projDesc_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projHi_").concat(newIndex, "\" class=\"sr-only\">Highlights</label>\n            <textarea name=\"projHi_").concat(newIndex, "\" id=\"projHi_").concat(newIndex, "\" cols=\"30\" rows=\"4\" placeholder=\"Tell something great...\"></textarea>\n        </div>\n        <div class=\"input-group \">\n            <label for=projUrl_").concat(newIndex, "\" class=\"sr-only\">URL</label>\n            <input type=\"url\" name=\"projUrl_").concat(newIndex, "\" id=\"projUrl_").concat(newIndex, "\">\n        </div>\n        <div class=\"input-group \">\n            <label for=\"projKeys_").concat(newIndex, "\" class=\"sr-only\">Keys</label>\n            <input type=\"text\" name=\"projKeys_").concat(newIndex, "\" id=\"projKeys_").concat(newIndex, "\">\n        </div>\n        <button class=\"proj-add-timg\">\uD83D\uDDBC\uFE0F Add a thumbnail (optional)</button>");
   assignProjButtons(newElement);
   var listParent = document.querySelector('.proj-form-container');
   listParent.appendChild(newElement);
@@ -2695,6 +2748,11 @@ function assignProjButtons(projItem) {
   });
   var buttonDel = projItem.querySelector(".proj-del");
   buttonDel.addEventListener("click", deleteProj);
+  var buttonAddTimg = projItem.querySelector(".proj-add-timg");
+
+  if (buttonAddTimg) {
+    buttonAddTimg.addEventListener("click", addProjTimgField);
+  }
 }
 
 function moveProj(e, direction) {
@@ -2755,6 +2813,32 @@ function modifyProjIdx(targetItem, newIndex) {
       inputGroup.querySelector('input').setAttribute("id", newAttr);
     }
   });
+}
+
+function addProjTimgField(e) {
+  e.preventDefault();
+  var projItem = e.target.parentNode.parentNode;
+  var index = parseInt(projItem.querySelector('input').getAttribute("id").replace("projName_", "")); // Create thumbnail preview area
+
+  var timgView = document.createElement("div");
+  timgView.className = "timg-preview";
+  timgView.innerHTML = "\n        <img>"; // Create thumbnail image input
+
+  var timgField = document.createElement("div");
+  timgField.className = "input-group";
+  timgField.innerHTML = "\n        <label for=\"projTimg_".concat(index, "\" class=\"sr-only\">Thumbnail (optional)</label>\n        <input type=\"file\" accept=\"image/png, image/jpeg\" name=\"projTimg_").concat(index, "\" id=\"projTimg_").concat(index, "\">");
+  timgField.querySelector("input").addEventListener("input", function (e) {
+    return previewTimg(e, index, "proj");
+  });
+  var projTimgField = projItem.querySelector(".proj-timg-field");
+  e.target.removeEventListener("click", addProjTimgField);
+  projTimgField.removeChild(e.target);
+
+  if (!projTimgField.querySelector(".timg-preview")) {
+    projTimgField.appendChild(timgView);
+  }
+
+  projTimgField.appendChild(timgField);
 }
 
 /***/ }),

@@ -2,6 +2,10 @@
 
 /* Layout */
 
+:root {
+    --timg-img-size: 40px;
+}
+
 /* Main form body */
 
 .form-body {
@@ -160,7 +164,8 @@ main > form.resume-editor {
         "work-stdt-field work-endt-field"
         "work-summ-field work-summ-field"
         "work-url-field work-url-field"
-        "work-high-field work-high-field";
+        "work-high-field work-high-field"
+        "work-timg-field work-timg-field";
 }
 
 .work-form .input-group:nth-child(1) {
@@ -195,6 +200,10 @@ main > form.resume-editor {
     grid-area: work-high-field;
 }
 
+.work-timg-field {
+    grid-area: work-timg-field;
+}
+
 /* Portfolio */
 
 .proj-form {
@@ -211,7 +220,8 @@ main > form.resume-editor {
         "proj-url-field proj-url-field"
         "proj-desc-field proj-desc-field"
         "proj-high-field proj-high-field"
-        "proj-keys-field proj-keys-field";
+        "proj-keys-field proj-keys-field"
+        "proj-timg-field proj-timg-field";
 }
 
 .proj-form .input-group:nth-child(1) {
@@ -254,6 +264,31 @@ main > form.resume-editor {
     grid-area: proj-keys-field;
 }
 
+.proj-timg-field {
+    grid-area: proj-timg-field;
+}
+
+.work-timg-field, .proj-timg-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.work-add-timg, .proj-add-timg {
+    width: fit-content;
+    padding: .25rem .5rem;
+    cursor: pointer;
+}
+
+.timg-preview {
+    width: var(--timg-img-size);
+    margin-right: 1rem;
+}
+
+.timg-preview img {
+    width: 100%;
+}
+
 @media screen and (min-width: 560px) {
     .res-basics-form {
         grid-template-columns: 1fr 1fr 1fr;
@@ -267,7 +302,8 @@ main > form.resume-editor {
             "work-location-field work-location-field"
             "work-stdt-field work-endt-field"
             "work-summ-field work-url-field"
-            "work-high-field work-high-field";
+            "work-high-field work-high-field"
+            "work-timg-field work-timg-field";
     }
 
     .proj-form {
@@ -278,7 +314,8 @@ main > form.resume-editor {
             "proj-roles-field proj-url-field"
             "proj-desc-field proj-desc-field"
             "proj-high-field proj-high-field"
-            "proj-keys-field proj-keys-field";
+            "proj-keys-field proj-keys-field"
+            "proj-timg-field proj-timg-field";
     }
 }
 
@@ -293,7 +330,8 @@ main > form.resume-editor {
             "work-name-field work-position-field work-location-field"
             "work-stdt-field work-endt-field ."
             "work-summ-field work-summ-field work-url-field"
-            "work-high-field work-high-field work-high-field";
+            "work-high-field work-high-field work-high-field"
+            "work-timg-field work-timg-field work-timg-field";
     }
 
     .proj-form {
@@ -304,7 +342,8 @@ main > form.resume-editor {
             "proj-roles-field proj-roles-field proj-url-field"
             "proj-desc-field proj-desc-field proj-desc-field"
             "proj-high-field proj-high-field proj-high-field"
-            "proj-keys-field proj-keys-field .";
+            "proj-keys-field proj-keys-field ."
+            "proj-timg-field proj-timg-field proj-timg-field";
     }
 
     .skillAndLangForm {

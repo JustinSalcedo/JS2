@@ -60,7 +60,11 @@
                     <li>
                         <div class="work-img">
                             <a href="{{ $workXp["url"] }}">
-                                <img src="{{ asset('storage/media/work-default.png') }}" alt="{{ $workXp["name"] }}">
+                                <img @if (array_key_exists("thumbnail", $workXp))
+                                        src="{{ asset($workXp["thumbnail"]) }}"
+                                    @else
+                                        src="{{ asset('storage/media/work-default.png') }}"
+                                @endif alt="{{ $workXp["name"] }}">
                             </a>
                         </div>
                         <div class="work-info">
@@ -94,12 +98,20 @@
                     usort($projects, function ($a, $b) {
                         return $a["startDate"] < $b["startDate"];
                     });
+
+                    function removeSpecialChar($str) {
+                        return preg_replace('/[^a-zA-Z0-9_-]/s', '', strtolower($str));
+                    }
                 @endphp
                 @foreach ($projects as $project)
                     <li>
                         <div class="proj-img">
                             <a href="{{ $project["url"] }}">
-                                <img src="{{ asset('storage/media/proj-default.png') }}" alt="{{ $project["name"] }}">
+                                <img @if (array_key_exists("thumbnail", $project))
+                                        src="{{ asset($project["thumbnail"]) }}"
+                                    @else
+                                        src="{{ asset('storage/media/proj-default.png') }}"
+                                @endif alt="{{ $project["name"] }}">
                             </a>
                         </div>
                         <div class="proj-info">
@@ -114,7 +126,10 @@
                         @endphp
                         <ul class="proj-tags">
                             @foreach ($tagSet as $tag)
-                                <li>{{ $tag }}</li>
+                                @php
+                                    $bagClass = removeSpecialChar($tag);
+                                @endphp
+                                <li>{{ $bagClass }}</li>
                             @endforeach
                         </ul>
                         <div class="proj-desc">

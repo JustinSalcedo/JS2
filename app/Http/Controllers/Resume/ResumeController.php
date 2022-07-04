@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Resume;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
 {
@@ -115,9 +116,21 @@ class ResumeController extends Controller
             if (array_key_exists("workEndDate_".$w, $request->all())) {
                 $workXp["endDate"] = $request->all()["workEndDate_".$w];
             }
+
+            if (array_key_exists("workTimg_".$w, $request->all())) {
+                $path = $request->file("workTimg_".$w)->store('public/media/wtimgs');
+                $workXp["thumbnail"] = Storage::url($path);
+
+            } else if (array_key_exists("workOlTimg_".$w, $request->all())) {
+                $workXp["thumbnail"] = $request->all()["workOlTimg_".$w];
+            }
+
             array_push($workHist, $workXp);
             $w++;
         }
+
+        $this->deleteTimgs($workHist, $resume["work"]);
+
         $resume["work"] = $workHist;
 
         $p = 0; $portfolio = [];
@@ -136,12 +149,22 @@ class ResumeController extends Controller
             if (array_key_exists("projEndDate_".$p, $request->all())) {
                 $project["endDate"] = $request->all()["projEndDate_".$p];
             }
+
+            if (array_key_exists("projTimg_".$p, $request->all())) {
+                $path = $request->file("projTimg_".$p)->store('public/media/ptimgs');
+                $project["thumbnail"] = Storage::url($path);
+
+            } else if (array_key_exists("projOlTimg_".$p, $request->all())) {
+                $project["thumbnail"] = $request->all()["projOlTimg_".$p];
+            }
+
             array_push($portfolio, $project);
             $p++;
         }
-        $resume["projects"] = $portfolio;
 
-        // dd($resume);
+        $this->deleteTimgs($portfolio, $resume["projects"]);
+
+        $resume["projects"] = $portfolio;
 
         $resumeJSON = json_encode($resume);
         file_put_contents(__DIR__."/masterResume.json", $resumeJSON);
@@ -171,5 +194,44 @@ class ResumeController extends Controller
             'languages' => $resume["languages"],
             'projects' => $resume["projects"]
         ]);
+    }
+
+    private function deleteTimgs($newList, $oldList)
+    {
+        $newWithTimgs = array_filter($newList, function ($item) {
+            return array_key_exists("thumbnail", $item);
+        });
+        $currTimgPaths = array_map(function ($item) {
+            return $item["thumbnail"];
+        }, $newWithTimgs);
+
+        $oldWithTimgs = array_filter($oldList, function ($item) {
+            return array_key_exists("thumbnail", $item);
+        });
+        $oldTimgPaths = array_map(function ($item) {
+            return $item["thumbnail"];
+        }, $oldWithTimgs);
+
+        $i = 0; $expiredTimgPaths = [];
+        while($i < count($oldTimgPaths)) {
+            $j = 0; $isExpired = true;
+            while($j < count($currTimgPaths)) {
+                if ($oldTimgPaths[$i] === $currTimgPaths[$j]) {
+                    $isExpired = false;
+                    break;
+                }
+                $j++;
+            }
+            if ($isExpired) {
+                array_push($expiredTimgPaths, $oldTimgPaths[$i]);
+            }
+            $i++;
+        }
+
+        $parsedPaths = array_map(function ($timgPath) {
+            return str_replace("/storage", "public", $timgPath);
+        }, $expiredTimgPaths);
+
+        return Storage::delete($parsedPaths);
     }
 }
