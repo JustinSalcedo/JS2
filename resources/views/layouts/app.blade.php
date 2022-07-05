@@ -7,6 +7,7 @@
     <title>Justin Salcedo - Web Developer</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/badges.css') }}">
 </head>
 <body>
     @php
@@ -14,13 +15,22 @@
         $basics = $resume["basics"]
     @endphp
     <div class="blackout off"></div>
+    <div class="preloader" style="
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: hsla(260, 20%, 5%, 0.4);
+        z-index: 1;
+    "></div>
     <section class="nav-bar">
         <header>
-            <h1>
-                <span class="author-name">Justin Salcedo</span>
-                <span class="author-role">Web Developer</span>
-            </h1>
-        </header>
+            <a href="{{ route('home') }}">
+                <h1>
+                    <span class="author-name">Justin Salcedo</span>
+                    <span class="author-role">Web Developer</span>
+                </h1>
+            </a>
+            </header>
         <div class="contact-info alt-lyt">
             <div class="contact-links">
                 <div class="contact-method">
@@ -143,6 +153,7 @@
         <p class="copy-notice">
             &copy; 2022. All rights reserved.
         </p>
+        <div class="top-scroll">⬆️</div>
     </footer>
 
     <script src="{{ asset('js/app.js') }}"></script>

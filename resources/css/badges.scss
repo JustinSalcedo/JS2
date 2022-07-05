@@ -1,0 +1,22 @@
+@use "sass:list";
+
+$common-white: hsl(0, 0%, 100%);
+$common-black: hsl(0, 0%, 10%);
+
+$tags: (
+    "landingpage": (#D65F23, $common-white),
+    "prototype": (#BDFF79, $common-black),
+    "restfulapi": (#FEF7EB, $common-black),
+    "webapp": (#D636C6, $common-white),
+    "e-store": (#FFF316, $common-black),
+    "website": (#0168EE, $common-white)
+);
+
+.badge {
+    @each $tag, $colors in $tags {
+        &.bg-#{$tag} {
+            background-color: list.nth($colors, 1);
+            color: list.nth($colors, 2);
+        }
+    }
+}

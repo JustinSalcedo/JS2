@@ -145,6 +145,23 @@ summary.work-position {
     left: 50%;
 }
 
+.proj-desc-body .proj-desc-header {
+    visibility: hidden;
+}
+
+.proj-desc-body.on .proj-desc-header {
+    visibility: visible;
+}
+
+.proj-desc-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-modal {
+    cursor: pointer;
+}
+
 .proj-link {
     grid-area: proj-link;
     padding: .75rem 0px;

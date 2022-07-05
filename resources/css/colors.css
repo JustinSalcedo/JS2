@@ -23,6 +23,7 @@
     --proj-link-color: var(--common-white);
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
+    --proj-ref-color: hsl(208, 54%, 46%);
     --gray-text: hsla(260, 2%, 60%);
     --tag-text: var(--common-black);
 
@@ -51,6 +52,7 @@ body.dark-theme {
 
     --body-text: var(--light-white);
     --proj-link-color: hsl(113, 80%, 93%);
+    --proj-ref-color: hsl(208, 64%, 61%);
     --link-color: hsl(48, 100%, 63%);
 
     /* Borders */
@@ -150,6 +152,14 @@ a {
     border-radius: 20px;
 }
 
+.proj-ref {
+    color: var(--proj-ref-color);
+}
+
+.proj-ref:hover {
+    text-decoration: underline;
+}
+
 .proj-link {
     background-color: var(--bkg-proj-link);
     color: var(--proj-link-color);
@@ -172,6 +182,12 @@ footer {
 
 .footer-links a:hover {
     text-decoration: underline;
+}
+
+.top-scroll {
+    background-color: aliceblue;
+    box-shadow: 2px 2px 4px var(--bx-shdw-lit-color);
+    border-radius: 50%;
 }
 
 @media screen and (min-width: 560px) {

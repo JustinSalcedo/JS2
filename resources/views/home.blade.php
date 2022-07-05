@@ -102,6 +102,21 @@
                     function removeSpecialChar($str) {
                         return preg_replace('/[^a-zA-Z0-9_-]/s', '', strtolower($str));
                     }
+
+                    function mapTypesToEmojis($str) {
+                        switch ($str) {
+                            case 'website':
+                                return "🌐";
+                            case 'app':
+                                return "📱";
+                            case 'agency':
+                                return "💼";
+                            case 'api':
+                                return "🔗";
+                            default:
+                                return null;
+                        }
+                    }
                 @endphp
                 @foreach ($projects as $project)
                     <li>
@@ -117,7 +132,11 @@
                         <div class="proj-info">
                             <h3 class="proj-title">
                                 <a href="{{ $project["url"] }}">{{ $project["name"] }}</a>
-                                <span class="proj-type">{{ $project["type"] }}</span>
+                                @if (mapTypesToEmojis($project["type"]))
+                                    <span aria-label="{{ $project["type"] }}">{{ mapTypesToEmojis($project["type"]) }}</span>
+                                @else
+                                    <span class="proj-type">{{ $project["type"] }}</span>
+                                @endif
                             </h3>
                             <p class="proj-subtitle">{{ $project["description"] }}</p>
                         </div>
@@ -129,18 +148,30 @@
                                 @php
                                     $bagClass = removeSpecialChar($tag);
                                 @endphp
-                                <li>{{ $bagClass }}</li>
+                                <li class="badge bg-{{ $bagClass }}">{{ $tag }}</li>
                             @endforeach
                         </ul>
                         <div class="proj-desc">
                             <details>
                                 <summary></summary>
                                 <div class="proj-desc-body">
+                                    <div class="proj-desc-header">
+                                        <ul class="proj-tags">
+                                            @foreach ($tagSet as $tag)
+                                                @php
+                                                    $bagClass = removeSpecialChar($tag);
+                                                @endphp
+                                                <li class="badge bg-{{ $bagClass }}">{{ $tag }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <span class="close-modal">❌</span>
+                                    </div>
                                     <ul>
                                         @foreach ($project["highlights"] as $highlight)
                                             <li><p>{{ $highlight }}</p></li>
                                         @endforeach
                                     </ul>
+                                    <p>Check it out: <a href="{{ $project["url"] }}" class="proj-ref">{{ $project["url"] }}</a></p>
                                 </div>
                             </details>
                         </div>

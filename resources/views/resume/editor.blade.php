@@ -360,5 +360,6 @@
                 <button type="submit">Save resume</button>
             </div>
         </form>
+        <script src="{{ asset("js/resumeEditor.js") }}"></script>
     </main>
 @endsection

@@ -112,6 +112,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --proj-link-color: var(--common-white);
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
+    --proj-ref-color: hsl(208, 54%, 46%);
     --gray-text: hsla(260, 2%, 60%);
     --tag-text: var(--common-black);
 
@@ -140,6 +141,7 @@ body.dark-theme {
 
     --body-text: var(--light-white);
     --proj-link-color: hsl(113, 80%, 93%);
+    --proj-ref-color: hsl(208, 64%, 61%);
     --link-color: hsl(48, 100%, 63%);
 
     /* Borders */
@@ -239,6 +241,14 @@ a {
     border-radius: 20px;
 }
 
+.proj-ref {
+    color: var(--proj-ref-color);
+}
+
+.proj-ref:hover {
+    text-decoration: underline;
+}
+
 .proj-link {
     background-color: var(--bkg-proj-link);
     color: var(--proj-link-color);
@@ -261,6 +271,12 @@ footer {
 
 .footer-links a:hover {
     text-decoration: underline;
+}
+
+.top-scroll {
+    background-color: aliceblue;
+    box-shadow: 2px 2px 4px var(--bx-shdw-lit-color);
+    border-radius: 50%;
 }
 
 @media screen and (min-width: 560px) {
@@ -533,6 +549,19 @@ footer {
     display: none;
 }
 
+/* Top scroll button */
+
+.top-scroll {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 560px) {
 
     /* Nav bar */
@@ -624,6 +653,10 @@ footer {
 
     body.double-view footer {
         width: calc(640px - var(--side-bar-width));
+    }
+
+    .top-scroll.off {
+        visibility: hidden;
     }
 }
 
@@ -826,6 +859,23 @@ summary.work-position {
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
+}
+
+.proj-desc-body .proj-desc-header {
+    visibility: hidden;
+}
+
+.proj-desc-body.on .proj-desc-header {
+    visibility: visible;
+}
+
+.proj-desc-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-modal {
+    cursor: pointer;
 }
 
 .proj-link {
@@ -1112,6 +1162,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --proj-link-color: var(--common-white);
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
+    --proj-ref-color: hsl(208, 54%, 46%);
     --gray-text: hsla(260, 2%, 60%);
     --tag-text: var(--common-black);
 
@@ -1140,6 +1191,7 @@ body.dark-theme {
 
     --body-text: var(--light-white);
     --proj-link-color: hsl(113, 80%, 93%);
+    --proj-ref-color: hsl(208, 64%, 61%);
     --link-color: hsl(48, 100%, 63%);
 
     /* Borders */
@@ -1239,6 +1291,14 @@ a {
     border-radius: 20px;
 }
 
+.proj-ref {
+    color: var(--proj-ref-color);
+}
+
+.proj-ref:hover {
+    text-decoration: underline;
+}
+
 .proj-link {
     background-color: var(--bkg-proj-link);
     color: var(--proj-link-color);
@@ -1261,6 +1321,12 @@ footer {
 
 .footer-links a:hover {
     text-decoration: underline;
+}
+
+.top-scroll {
+    background-color: aliceblue;
+    box-shadow: 2px 2px 4px var(--bx-shdw-lit-color);
+    border-radius: 50%;
 }
 
 @media screen and (min-width: 560px) {
@@ -1533,6 +1599,19 @@ footer {
     display: none;
 }
 
+/* Top scroll button */
+
+.top-scroll {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 560px) {
 
     /* Nav bar */
@@ -1624,6 +1703,10 @@ footer {
 
     body.double-view footer {
         width: calc(640px - var(--side-bar-width));
+    }
+
+    .top-scroll.off {
+        visibility: hidden;
     }
 }
 
@@ -2154,6 +2237,7 @@ summary.work-position:hover, details[open] summary.work-position {
     --proj-link-color: var(--common-white);
     --page-link-color: var(--common-white);
     --link-color: hsl(48, 100%, 63%);
+    --proj-ref-color: hsl(208, 54%, 46%);
     --gray-text: hsla(260, 2%, 60%);
     --tag-text: var(--common-black);
 
@@ -2182,6 +2266,7 @@ body.dark-theme {
 
     --body-text: var(--light-white);
     --proj-link-color: hsl(113, 80%, 93%);
+    --proj-ref-color: hsl(208, 64%, 61%);
     --link-color: hsl(48, 100%, 63%);
 
     /* Borders */
@@ -2281,6 +2366,14 @@ a {
     border-radius: 20px;
 }
 
+.proj-ref {
+    color: var(--proj-ref-color);
+}
+
+.proj-ref:hover {
+    text-decoration: underline;
+}
+
 .proj-link {
     background-color: var(--bkg-proj-link);
     color: var(--proj-link-color);
@@ -2303,6 +2396,12 @@ footer {
 
 .footer-links a:hover {
     text-decoration: underline;
+}
+
+.top-scroll {
+    background-color: aliceblue;
+    box-shadow: 2px 2px 4px var(--bx-shdw-lit-color);
+    border-radius: 50%;
 }
 
 @media screen and (min-width: 560px) {
@@ -2575,6 +2674,19 @@ footer {
     display: none;
 }
 
+/* Top scroll button */
+
+.top-scroll {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 560px) {
 
     /* Nav bar */
@@ -2666,6 +2778,10 @@ footer {
 
     body.double-view footer {
         width: calc(640px - var(--side-bar-width));
+    }
+
+    .top-scroll.off {
+        visibility: hidden;
     }
 }
 

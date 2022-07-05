@@ -1,0 +1,24 @@
+.badge.bg-landingpage {
+  background-color: #D65F23;
+  color: hsl(0deg, 0%, 100%);
+}
+.badge.bg-prototype {
+  background-color: #BDFF79;
+  color: hsl(0deg, 0%, 10%);
+}
+.badge.bg-restfulapi {
+  background-color: #FEF7EB;
+  color: hsl(0deg, 0%, 10%);
+}
+.badge.bg-webapp {
+  background-color: #D636C6;
+  color: hsl(0deg, 0%, 100%);
+}
+.badge.bg-e-store {
+  background-color: #FFF316;
+  color: hsl(0deg, 0%, 10%);
+}
+.badge.bg-website {
+  background-color: #0168EE;
+  color: hsl(0deg, 0%, 100%);
+}

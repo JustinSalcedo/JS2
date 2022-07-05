@@ -154,6 +154,19 @@ footer {
     display: none;
 }
 
+/* Top scroll button */
+
+.top-scroll {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 560px) {
 
     /* Nav bar */
@@ -245,6 +258,10 @@ footer {
 
     body.double-view footer {
         width: calc(640px - var(--side-bar-width));
+    }
+
+    .top-scroll.off {
+        visibility: hidden;
     }
 }
 

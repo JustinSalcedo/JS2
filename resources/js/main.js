@@ -1,9 +1,7 @@
-require('./resumeEditor')
-
 const NAV_BAR_HEIGHT = 88
 
-const heading1 = document.querySelector('h1')
-heading1.addEventListener("click", scrollToTop)
+// const heading1 = document.querySelector('h1')
+// heading1.addEventListener("click", scrollToTop)
 
 const burgerBtn = document.querySelector('button.nav-burger')
 burgerBtn.addEventListener("click", toggleSideNavbar)
@@ -22,12 +20,14 @@ blackout.addEventListener("click", () => {
     }
 })
 
+const topScroll = document.querySelector('.top-scroll')
+topScroll.addEventListener("click", scrollToTop)
+
 const sideNavbar = document.querySelector('nav.nav-content')
 
 // addEventListener("scroll", () => console.log('scrolling'))
 
 function goHide() {
-    // scrollToTop()
     toggleSideNavbar()
 }
 
@@ -58,10 +58,15 @@ function closeModal() {
         activateScrolling()
         blackout.classList.replace('on', 'off')
         blackout.classList.remove('modal')
+
+        topScroll.classList.remove("off")
+
         activeModal.classList.remove('on')
         activeModal.parentNode.removeAttribute("open")
         activeModal = null
+
         isModalOn = false
+        document.removeEventListener("keydown", escapeModal)
     }
 }
 
@@ -93,29 +98,41 @@ Array.from(themeBtns).forEach(themeBtn => {
 })
 
 function switchDarkTheme() {
-    const { classList } = document.body
+    const theme = localStorage.getItem("theme")
 
-    if (!classList.contains("dark-theme")) {
-        document.body.classList.add("dark-theme")
-        addWhiteIcons()
-        Array.from(themeBtns).forEach(themeBtn => {
-            themeBtn.innerHTML = "☀️"
-        })
+    if (theme === "light") {
+        goDark()
     } else {
-        document.body.classList.remove("dark-theme")
-        addInitialIcons()
-        Array.from(themeBtns).forEach(themeBtn => {
-            themeBtn.innerHTML = "🌙"
-        })
+        goLight()
     }
+}
+
+function goDark() {
+    document.body.classList.add("dark-theme")
+    addWhiteIcons()
+    Array.from(themeBtns).forEach(themeBtn => {
+        themeBtn.innerHTML = "☀️"
+    })
+    localStorage.setItem("theme", "dark")
+}
+
+function goLight() {
+    document.body.classList.remove("dark-theme")
+    addInitialIcons()
+    Array.from(themeBtns).forEach(themeBtn => {
+        themeBtn.innerHTML = "🌙"
+    })
+    localStorage.setItem("theme", "light")
 }
 
 function addWhiteIcons() {
     const iconsList = document.querySelectorAll('.nav-footer .social-links img, .contact-info.alt-lyt .social-links img')
     Array.from(iconsList).forEach(iconElement => {
         const originalSrc = iconElement.getAttribute('src')
-        const newSrc = originalSrc.replace('.', '-white.')
-        iconElement.setAttribute('src', newSrc)
+        if (!originalSrc.match("-white.")) {
+            const newSrc = originalSrc.replace('.', '-white.')
+            iconElement.setAttribute('src', newSrc)
+        }
     })
 }
 
@@ -123,8 +140,10 @@ function addInitialIcons() {
     const iconsList = document.querySelectorAll('.nav-footer .social-links img, .contact-info.alt-lyt .social-links img')
     Array.from(iconsList).forEach(iconElement => {
         const originalSrc = iconElement.getAttribute('src')
-        const newSrc = originalSrc.replace('-white.', '.')
-        iconElement.setAttribute('src', newSrc)
+        if (originalSrc.match("-white.")) {
+            const newSrc = originalSrc.replace('-white.', '.')
+            iconElement.setAttribute('src', newSrc)
+        }
     })
 }
 
@@ -241,7 +260,14 @@ function setupView() {
     addWorkTogglers()
     addProjectModals()
     cropAllBlogSums()
-    // moveLangSectionUp()
+
+    const theme = localStorage.getItem("theme")
+    if ((theme && theme === "dark") || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        goDark()
+    } else goLight()
+
+    const preloader = document.querySelector(".preloader")
+    document.body.removeChild(preloader)
 }
 
 // Display job roles for each description
@@ -301,7 +327,9 @@ function toggleDisclosures(e) {
 function addProjectModals() {
     const summaryList = Array.from(document.querySelectorAll(".proj-desc summary"))
     if (summaryList && summaryList.length) {
-        summaryList.forEach(summary => summary.addEventListener("click", displayProjModal))
+        summaryList.forEach(summary => {
+            summary.addEventListener("click", displayProjModal)
+        })
     }
 }
 
@@ -318,9 +346,20 @@ function displayProjModal(e) {
             blackout.classList.replace("off", "on")
             blackout.classList.add("modal")
 
+            topScroll.classList.add("off")
+
             activeModal = e.target.nextElementSibling
             activeModal.classList.add("on")
+            activeModal.querySelector(".close-modal").addEventListener("click", closeModal)
+
+            document.addEventListener("keydown", escapeModal)
         }
+    }
+}
+
+function escapeModal(e) {
+    if (e.key === 'Escape') {
+        closeModal()
     }
 }
 
